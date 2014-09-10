@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="AutoCompleteTextViewWeeGo" parent="android:Widget.Holo.Light.AutoCompleteTextView">
+      <item name="android:dropDownSelector">@drawable/weego_list_selector_holo_light</item>
+	    <item name="android:background">@drawable/weego_edit_text_holo_light</item>
+  </style>
+
+  <style name="ButtonWeeGo" parent="android:Widget.Holo.Light.Button">
+	  <item name="android:background">@drawable/weego_btn_default_holo_light</item>
+  </style>
+
+  <style name="ImageButtonWeeGo" parent="android:Widget.Holo.Light.ImageButton">
+	  <item name="android:background">@drawable/weego_btn_default_holo_light</item>
+  </style>
+
+  <style name="SpinnerWeeGo" parent="android:Widget.Holo.Light.Spinner">
+      <item name="android:background">@drawable/weego_spinner_background_holo_light</item>
+      <item name="android:dropDownSelector">@drawable/weego_list_selector_holo_light</item>
+  </style>
+
+  <style name="ProgressBarWeeGo" parent="android:Widget.Holo.Light.ProgressBar.Horizontal">
+      <item name="android:progressDrawable">@drawable/weego_progress_horizontal_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/weego_progress_indeterminate_horizontal_holo_light</item>
+  </style>
+
+  <style name="ToggleWeeGo" parent="android:Widget.Holo.Light.Button.Toggle">
+      <item name="android:background">@drawable/weego_btn_toggle_holo_light</item>
+  </style>
+
+</resources>

@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".save" >
+    <item android:id="@+id/action_save"
+        android:icon="@drawable/ic_action_content_save"
+        android:title="@string/action_settings"
+        android:orderInCategory="2"
+        android:showAsAction="ifRoom" />
+</menu>

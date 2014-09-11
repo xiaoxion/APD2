@@ -15,4 +15,8 @@
     <string name="action_save">Save</string>
     <string name="action_edit">Edit</string>
 
+    <string name="activity">Sample Activity</string>
+    <string name="sample1">TPA to ATL</string>
+    <string name="sample2">Dinner with Mike</string>
+
 </resources>

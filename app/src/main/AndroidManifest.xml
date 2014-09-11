@@ -17,10 +17,8 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".AddTrip" >
-
-            </activity>
+        <activity android:name=".AddTripActivity" />
+        <activity android:name=".ViewTripActivity" />
 
     </application>
 

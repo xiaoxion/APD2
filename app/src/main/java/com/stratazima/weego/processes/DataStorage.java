@@ -1,7 +1,6 @@
-package com.stratazima.weego;
+package com.stratazima.weego.processes;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,7 +21,7 @@ import java.io.InputStreamReader;
 public class DataStorage implements Cloneable {
     private static DataStorage mInstance;
     private static Context mContext;
-    JSONArray daObject = null;
+    JSONArray tripArray = null;
 
     private DataStorage() {}
 
@@ -64,10 +63,46 @@ public class DataStorage implements Cloneable {
     /**
      * Reads file and creates a JSONArray which is sent to the main activity
      */
-    public JSONArray onReadFile() {
+    public JSONArray onReadTripFiles() {
         String content;
+        File tempFileDir = mContext.getFilesDir();
+
+        File file[] = tempFileDir.listFiles();
+        tripArray = new JSONArray();
+        for (int i = 0; i < file.length; i++) {
+            try {
+                InputStream inputStream = mContext.openFileInput(file[i].getName());
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                StringBuilder contentBuffer = new StringBuilder();
+
+                while ((content = bufferedReader.readLine()) != null) {
+                    contentBuffer.append(content);
+                }
+
+                content = contentBuffer.toString();
+                tripArray.put(i, new JSONObject(content));
+                inputStream.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return tripArray;
+    }
+
+    public JSONObject onReadTrip(int position) {
+        String content;
+        File tempFileDir = mContext.getFilesDir();
+        File file[] = tempFileDir.listFiles();
+        JSONObject tempJSON = null;
+
         try {
-            InputStream inputStream = mContext.openFileInput("data.JSON");
+            InputStream inputStream = mContext.openFileInput(file[position].getName());
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             StringBuilder contentBuffer = new StringBuilder();
@@ -77,7 +112,7 @@ public class DataStorage implements Cloneable {
             }
 
             content = contentBuffer.toString();
-            daObject = new JSONArray(content);
+            tempJSON = new JSONObject(content);
             inputStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -87,6 +122,6 @@ public class DataStorage implements Cloneable {
             e.printStackTrace();
         }
 
-        return daObject;
+        return tempJSON;
     }
 }

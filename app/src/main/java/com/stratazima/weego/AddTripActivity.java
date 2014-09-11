@@ -1,24 +1,22 @@
 package com.stratazima.weego;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
+
+import com.stratazima.weego.processes.DataStorage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.Date;
 
 /**
  * Created by Esau on 9/10/2014.
  */
-public class AddTrip extends Activity {
+public class AddTripActivity extends Activity {
     //private ImageView tripImage;
     private EditText tripName;
     private EditText tripLocation;
@@ -58,8 +56,8 @@ public class AddTrip extends Activity {
 
                 try {
                     jsonObject.put("tripName", tripName.getText().toString());
-                    jsonObject.put("tripLocation", tripName.getText().toString());
-                    jsonObject.put("tripNotes", tripName.getText().toString());
+                    jsonObject.put("tripLocation", tripLocation.getText().toString());
+                    jsonObject.put("tripNotes", tripNotes.getText().toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

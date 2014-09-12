@@ -1,18 +1,13 @@
 package com.stratazima.weego;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.stratazima.weego.processes.ActivityCustomList;
 import com.stratazima.weego.processes.DataStorage;
-import com.stratazima.weego.processes.TripsCustomList;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

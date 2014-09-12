@@ -118,7 +118,7 @@ public class Main extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent viewTripIntent = new Intent(getApplicationContext(), ViewTripActivity.class);
-                viewTripIntent.putExtra("index", position);
+                viewTripIntent.putExtra("position", position);
                 startActivity(viewTripIntent);
             }
         });

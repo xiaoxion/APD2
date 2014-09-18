@@ -1,0 +1,51 @@
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/imageView" />
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/da_linear_layout" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/da_linear_layout"
+        android:orientation="horizontal"
+        android:background="@color/weego_color">
+
+
+        <Button
+            style="?android:buttonBarButtonStyle"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_date"
+            android:id="@+id/select_date"
+            android:onClick="showDatePickerDialog"/>
+
+        <Button
+            style="?android:buttonBarButtonStyle"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:text="@string/select_time"
+            android:id="@+id/select_time"
+            android:onClick="showTimePickerDialog"/>
+    </LinearLayout>
+
+</RelativeLayout>

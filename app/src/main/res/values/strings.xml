@@ -6,10 +6,14 @@
     <string name="action_settings">Settings</string>
 
     <string name="trip_name">Trip Name</string>
+    <string name="trip_add">Add a Trip via Add Button</string>
     <string name="flight_info">Flight Information</string>
     <string name="first_next_activity">First or Next Activity</string>
     <string name="city_country">Location:</string>
     <string name="note">Notes:</string>
+
+    <string name="select_date">Select Date</string>
+    <string name="select_time">Select Time</string>
 
     <string name="action_add">Add</string>
     <string name="action_save">Save</string>
@@ -18,5 +22,22 @@
     <string name="activity">Sample Activity</string>
     <string name="sample1">TPA to ATL</string>
     <string name="sample2">Dinner with Mike</string>
+    
+    <string name="flight">Flight</string>
+    <string name="flight_number">Flight Number</string>
+    <string name="flight_from">From</string>
+    <string name="flight_to">To</string>
+    <string name="flight_airline">Airline</string>
+    <string name="flight_confirmation">Confirmation Number</string>
+
+    <string name="food">Food</string>
+    <string name="food_restaurant">Restaurant</string>
+    <string name="food_confirmation">Confirmation</string>
+    <string name="food_notes">Food Notes</string>
+
+    <string name="meeting">Meeting</string>
+    <string name="meeting_name">Meeting Name</string>
+    <string name="meeting_with">Meeting With</string>
+    <string name="meeting_notes">Important Notes</string>
 
 </resources>

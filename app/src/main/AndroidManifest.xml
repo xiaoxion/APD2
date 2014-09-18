@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/WeeGo" >
         <activity
-            android:name=".Main"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,6 +19,8 @@
 
         <activity android:name=".AddTripActivity" />
         <activity android:name=".ViewTripActivity" />
+
+        <activity android:name=".AddActivityActivity" />
 
     </application>
 

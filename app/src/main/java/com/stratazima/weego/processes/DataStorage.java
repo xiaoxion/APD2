@@ -34,23 +34,26 @@ public class DataStorage implements Cloneable {
     }
 
     /**
-     * Check file so that the application can check if there
-     * is an existing file.
-     */
-    public boolean onCheckFile(String fileName) {
-        File file = new File(mContext.getFilesDir().getPath() + "/" + fileName);
-        return file.exists();
-    }
-
-    /**
      * Writes JSON data to application files directory.
      */
     public void onWriteFile(JSONObject jsonObject, String fileName) {
-        // JSONArray tempJSON;
-        //if (onCheckFile(fileName)) {} else {}
-
         try {
             FileOutputStream fos = mContext.openFileOutput(fileName, Context.MODE_PRIVATE);
+            fos.write(jsonObject.toString().getBytes());
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onRewriteFile (JSONObject jsonObject, int position) {
+        File tempFileDir = mContext.getFilesDir();
+        File file[] = tempFileDir.listFiles();
+
+        try {
+            FileOutputStream fos = mContext.openFileOutput(file[position].getName(), Context.MODE_PRIVATE);
             fos.write(jsonObject.toString().getBytes());
             fos.close();
         } catch (FileNotFoundException e) {

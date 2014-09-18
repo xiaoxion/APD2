@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import com.stratazima.weego.processes.DataStorage;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -58,6 +59,7 @@ public class AddTripActivity extends Activity {
                     jsonObject.put("tripName", tripName.getText().toString());
                     jsonObject.put("tripLocation", tripLocation.getText().toString());
                     jsonObject.put("tripNotes", tripNotes.getText().toString());
+                    jsonObject.put("tripActivities", new JSONArray());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class Main extends Activity {
+public class MainActivity extends Activity {
     static final int ADD_TRIP_REQUEST = 1;
     DataStorage dataStorage;
     ListView mainListView;

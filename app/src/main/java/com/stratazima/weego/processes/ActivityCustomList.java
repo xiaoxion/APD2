@@ -51,6 +51,10 @@ public class ActivityCustomList extends ArrayAdapter {
         }
 
         JSONObject tempObj = daArrayList.get(position);
+
+        holder.subOneTextView.setText("");
+        holder.subTwoTextView.setText("");
+
         if (tempObj != null) {
             String type = null;
 
@@ -62,11 +66,34 @@ public class ActivityCustomList extends ArrayAdapter {
 
             if (type != null) {
                 if (type.equals("meeting")) {
-                    holder.mainTextView.setText(tempObj);
+                    try {
+                        holder.mainTextView.setText(tempObj.getString("meetingName"));
+                        holder.subOneTextView.setText(tempObj.getString("meetingWith"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 } else if (type.equals("flight")) {
-
+                    try {
+                        holder.mainTextView.setText(tempObj.getString("flightAirline"));
+                        holder.subOneTextView.setText(tempObj.getString("flightConfirmation"));
+                        holder.subTwoTextView.setText(tempObj.getString("flightNumber"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 } else if (type.equals("food")) {
+                    try {
+                        holder.mainTextView.setText(tempObj.getString("restaurantName"));
+                        holder.subOneTextView.setText(tempObj.getString("restaurantConfirmation"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
 
+                try {
+                    holder.sideOneTextView.setText(tempObj.getString("time"));
+                    holder.sideTwoTextView.setText(tempObj.getString("date"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         }

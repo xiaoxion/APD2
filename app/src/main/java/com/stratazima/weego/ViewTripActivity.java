@@ -62,10 +62,13 @@ public class ViewTripActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_add) {
-            Intent addActivityIntent = new Intent(this, AddActivityActivity.class);
+            Intent addActivityIntent = new Intent(this, ActivityActivity.class);
             addActivityIntent.putExtra("position", position);
+            addActivityIntent.putExtra("listPosition", -1);
             startActivityForResult(addActivityIntent, ADD_ACTIVITY_REQUEST);
             return true;
+        } else if (id == R.id.action_edit) {
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -103,7 +106,7 @@ public class ViewTripActivity extends Activity {
         viewActivityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position1, long id) {
-                Intent viewActivityIntent = new Intent(getApplicationContext(), ViewActivityActivity.class);
+                Intent viewActivityIntent = new Intent(getApplicationContext(), ActivityActivity.class);
                 viewActivityIntent.putExtra("position", position);
                 viewActivityIntent.putExtra("listPosition", position1);
                 startActivityForResult(viewActivityIntent, VIEW_ACTIVITY_REQUEST);

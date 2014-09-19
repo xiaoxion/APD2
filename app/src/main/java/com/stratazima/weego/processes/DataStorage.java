@@ -64,7 +64,7 @@ public class DataStorage implements Cloneable {
     }
 
     /**
-     * Reads file and creates a JSONArray which is sent to the main activity
+     * Reads file and creates a JSONArray which is sent to the add_edit activity
      */
     public JSONArray onReadTripFiles() {
         String content;

@@ -22,11 +22,17 @@ public class AddTripActivity extends Activity {
     private EditText tripName;
     private EditText tripLocation;
     private EditText tripNotes;
+    DataStorage dataStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_add);
+
+        if (getIntent().getExtras() != null) {
+            int position = getIntent().getIntExtra("position", 0);
+            dataStorage.onReadTrip(position);
+        }
 
         tripName = (EditText) findViewById(R.id.add_trip_edittext);
         tripLocation = (EditText) findViewById(R.id.add_trip_edittext2);

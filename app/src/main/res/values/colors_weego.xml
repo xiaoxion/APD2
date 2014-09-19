@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="weego_color">#03a9f4</color>
+    <color name="error">#ff0033</color>
+    <color name="da_black">#000000</color>
 </resources>

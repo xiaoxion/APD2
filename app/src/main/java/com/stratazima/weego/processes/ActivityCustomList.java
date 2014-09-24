@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Esau on 9/11/2014.
@@ -99,6 +100,19 @@ public class ActivityCustomList extends ArrayAdapter {
         }
 
         return view;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        final Date date = new Date();
+        boolean temp = false;
+        try {
+            if (daArrayList.get(position).getInt("epoch") > date.getTime()) {
+                temp = true;
+            }
+        } catch (JSONException e) { e.printStackTrace();}
+
+        return temp;
     }
 
     static class ViewHolder {

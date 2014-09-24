@@ -481,6 +481,8 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
                 if (flightNumber.getText().toString().equals("")) flightNumber.setError("Enter Flight Number");
                 if (flightAirline.getText().toString().equals("")) flightAirline.setError("Enter Airline");
                 if (flightConfirmation.getText().toString().equals("")) flightConfirmation.setError("Enter Confirmation Number");
+                if (flightFrom.getText().toString().equals("")) flightFrom.setError("Where From");
+                if (flightTo.getText().toString().equals("")) flightTo.setError("Where To");
 
                 try {
                     tempJSON.put("error", true);
@@ -601,7 +603,7 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
     }
 
     /**
-     * Fragments for Date and Time Dialog Fragments
+     * Date and Time Dialog Fragments
      */
 
     public static class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {

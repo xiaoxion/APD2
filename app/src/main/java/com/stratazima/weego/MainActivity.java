@@ -18,11 +18,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 
 public class MainActivity extends Activity {
     static final int ADD_TRIP_REQUEST = 1;
+    static final int ACTIVITY_RETURN = 2;
     DataStorage dataStorage;
     ListView mainListView;
 
@@ -60,10 +62,8 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ADD_TRIP_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                onListCreate();
-            }
+        if (resultCode == RESULT_OK) {
+            onListCreate();
         }
     }
 
@@ -81,6 +81,7 @@ public class MainActivity extends Activity {
                 name = null;
                 flight = null;
                 daActivity = null;
+
                 try {
                     tempObj =  daJSONArray.getJSONObject(i);
                 } catch (JSONException e) {
@@ -95,27 +96,34 @@ public class MainActivity extends Activity {
 
                         boolean one = false;
                         boolean two = false;
+
                         for (i = 0; i < tempArray.length(); i++) {
-                            if (tempArray.getJSONObject(i).getString("type").equals("flight")) {
-                                if (!one) flight = tempArray.getJSONObject(i).getString("flightFrom") + " to " + tempArray.getJSONObject(i).getString("flightTo");
-                                one = true;
-                            } else {
-                                // TODO Add TempArray Data according to data.
-                                if (!two) {
-                                    //daActivity = tempArray.getJSONObject(i).getString("");
+                            final Date date = new Date();
+                            JSONObject tempJSON = tempArray.getJSONObject(i);
+                            if (tempJSON.getInt("epoch") > date.getTime()) {
+                                if (tempJSON.getString("type").equals("flight")) {
+                                    if (!one) flight = tempJSON.getString("flightFrom") + " to " + tempJSON.getString("flightTo");
+
+                                    one = true;
+                                } else {
+                                    if (!two) {
+                                        if (tempJSON.getString("type").equals("meeting")) {
+                                            daActivity = tempJSON.getString("meetingName");
+                                        } else if (tempJSON.getString("type").equals("food")) {
+                                            daActivity = tempJSON.getString("restaurantName");
+                                        }
+                                    }
+
+                                    two = true;
                                 }
 
-                                two = true;
+                                if (one && two) i = tempArray.length() + 1;
                             }
-
-                            if (one && two) i = tempArray.length() + 1;
                         }
 
-                        if (flight.equals("")) flight = "No Flight Planned";
-                        if (daActivity.equals("")) daActivity = "No Activities Planned";
+                        if (flight == null) flight = "No Upcoming Flight";
+                        if (daActivity == null) daActivity = "No Upcoming Activities";
                     } catch (JSONException e) {
-                        if (flight == null) flight = "No Flight Planned";
-                        daActivity = "No Activities Planned";
                         e.printStackTrace();
                     }
                 }
@@ -138,7 +146,7 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent viewTripIntent = new Intent(getApplicationContext(), ViewTripActivity.class);
                 viewTripIntent.putExtra("position", position);
-                startActivity(viewTripIntent);
+                startActivityForResult(viewTripIntent, ACTIVITY_RETURN);
             }
         });
     }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="weego_Widget" parent="@style/_weego_Widget"/>
+
+  <style name="_weego_Widget" parent="android:Theme.Holo.Light.DarkActionBar">
+
+    <item name="android:editTextBackground">@drawable/weego_widget_edit_text_holo_light</item>
+
+    <item name="android:textColorHighlight">#9900bcd4</item>
+    <item name="android:textSelectHandleLeft">@drawable/weego_widget_text_select_handle_left</item>
+    <item name="android:textSelectHandleRight">@drawable/weego_widget_text_select_handle_right</item>
+    <item name="android:textSelectHandle">@drawable/weego_widget_text_select_handle_middle</item>
+
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewweego_Widget</item>
+
+    <item name="android:buttonStyle">@style/Buttonweego_Widget</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonweego_Widget</item>
+
+    <item name="android:dropDownSpinnerStyle">@style/Spinnerweego_Widget</item>
+
+    <item name="android:listChoiceBackgroundIndicator">@drawable/weego_widget_list_selector_holo_light</item>
+
+    <item name="android:activatedBackgroundIndicator">@drawable/weego_widget_activated_background_holo_light</item>
+
+    <item name="android:fastScrollThumbDrawable">@drawable/weego_widget_fastscroll_thumb_holo</item>
+
+  </style>
+
+</resources>

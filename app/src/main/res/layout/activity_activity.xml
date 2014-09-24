@@ -26,7 +26,7 @@
         android:layout_alignParentStart="true"
         android:id="@+id/da_linear_layout"
         android:orientation="horizontal"
-        android:background="@color/weego_color">
+        android:background="@color/weego_widget_color">
 
         <Button
             style="?android:buttonBarButtonStyle"

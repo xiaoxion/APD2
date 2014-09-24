@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="AutoCompleteTextViewweego_Widget" parent="android:Widget.Holo.Light.AutoCompleteTextView">
+      <item name="android:dropDownSelector">@drawable/weego_widget_list_selector_holo_light</item>
+	    <item name="android:background">@drawable/weego_widget_edit_text_holo_light</item>
+  </style>
+
+  <style name="Buttonweego_Widget" parent="android:Widget.Holo.Light.Button">
+	  <item name="android:background">@drawable/weego_widget_btn_default_holo_light</item>
+  </style>
+
+  <style name="ImageButtonweego_Widget" parent="android:Widget.Holo.Light.ImageButton">
+	  <item name="android:background">@drawable/weego_widget_btn_default_holo_light</item>
+  </style>
+
+  <style name="Spinnerweego_Widget" parent="android:Widget.Holo.Light.Spinner">
+      <item name="android:background">@drawable/weego_widget_spinner_background_holo_light</item>
+      <item name="android:dropDownSelector">@drawable/weego_widget_list_selector_holo_light</item>
+  </style>
+
+</resources>

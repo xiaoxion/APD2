@@ -29,8 +29,12 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Esau on 9/15/2014.
@@ -107,23 +111,7 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
             menu.findItem(R.id.action_edit).setVisible(true);
             menu.findItem(R.id.action_save).setVisible(false);
 
-            try {
-                setTimeButton.setText(editJSON.getString("time"));
-                setDateButton.setText(editJSON.getString("date"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            if (type.equals("meeting")) {
-                MeetingFragment meetingFragment = (MeetingFragment) getFragmentManager().findFragmentByTag("meeting");
-                meetingFragment.onSetData(editJSON);
-            } else if (type.equals("flight")) {
-                FlightFragment flightFragment = (FlightFragment) getFragmentManager().findFragmentByTag("flight");
-                flightFragment.onSetData(editJSON);
-            } else if (type.equals("food")) {
-                FoodFragment foodFragment = (FoodFragment) getFragmentManager().findFragmentByTag("food");
-                foodFragment.onSetData(editJSON);
-            }
+            onMenuOptions();
         }
         return true;
     }
@@ -131,131 +119,17 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        boolean mainBool = false;
+
         if (id == R.id.action_save) {
-            FragmentManager fragmentManager = getFragmentManager();
-            dataStorage = DataStorage.getInstance(this);
-            JSONObject tempJSON = dataStorage.onReadTrip(position);
-            JSONObject data = new JSONObject();
-            boolean error = false;
-
-            if (menuOptions) {
-                if (type.equals("meeting")) {
-                    MeetingFragment meetingFragment = (MeetingFragment) getFragmentManager().findFragmentByTag("meeting");
-                    try {
-                        data = meetingFragment.onGetData();
-                        data.put("type", "meeting");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else if (type.equals("flight")) {
-                    FlightFragment flightFragment = (FlightFragment) getFragmentManager().findFragmentByTag("flight");
-                    try {
-                        data = flightFragment.onGetData();
-                        data.put("type", "flight");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else if (type.equals("food")) {
-                    FoodFragment foodFragment = (FoodFragment) getFragmentManager().findFragmentByTag("food");
-                    try {
-                        data = foodFragment.onGetData();
-                        data.put("type", "food");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } else {
-                if (setDateButton.getText().equals("Select Date") || setTimeButton.getText().equals("Select Time")) {
-                    error = true;
-                }
-
-                switch (getActionBar().getSelectedNavigationIndex()) {
-                    case 0:
-                        MeetingFragment meetingFragment = (MeetingFragment) fragmentManager.findFragmentByTag("meeting");
-                        try {
-                            data = meetingFragment.onGetData();
-                            data.put("type", "meeting");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        break;
-                    case 1:
-                        FlightFragment flightFragment = (FlightFragment) fragmentManager.findFragmentByTag("flight");
-                        try {
-                            data = flightFragment.onGetData();
-                            data.put("type", "flight");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        break;
-                    case 2:
-                        FoodFragment foodFragment = (FoodFragment) fragmentManager.findFragmentByTag("food");
-                        try {
-                            data = foodFragment.onGetData();
-                            data.put("type", "food");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        break;
-                }
-            }
-
-            try {
-                if (data.getBoolean("error")) error = true;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            if (error) {
-                if (setDateButton.getText().equals("Select Date")) setDateButton.setTextColor(getResources().getColor(R.color.error));
-                if (setTimeButton.getText().equals("Select Time")) setTimeButton.setTextColor(getResources().getColor(R.color.error));
-
-                return false;
-            }
-
-            try {
-                data.put("date", setDateButton.getText());
-                data.put("time", setTimeButton.getText());
-                data.put("epoch", getEpochTime());
-                if (menuOptions) {
-                    tempJSON.getJSONArray("tripActivities").put(position2, data);
-                } else {
-                    tempJSON.getJSONArray("tripActivities").put(data);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-            dataStorage.onRewriteFile(tempJSON, position);
-            finish();
-            return true;
+            mainBool = onActionSave();
         }
 
         if (id == R.id.action_edit) {
-            daOptionsMenu.findItem(R.id.action_edit).setVisible(false);
-            daOptionsMenu.findItem(R.id.action_save).setVisible(true);
-
-            setTimeButton.setEnabled(true);
-            setDateButton.setEnabled(true);
-
-            if (type.equals("meeting")) {
-                MeetingFragment meetingFragment = (MeetingFragment) getFragmentManager().findFragmentByTag("meeting");
-                meetingFragment.onEnable();
-            } else if (type.equals("flight")) {
-                FlightFragment flightFragment = (FlightFragment) getFragmentManager().findFragmentByTag("flight");
-                flightFragment.onEnable();
-            } else if (type.equals("food")) {
-                FoodFragment foodFragment = (FoodFragment) getFragmentManager().findFragmentByTag("food");
-                foodFragment.onEnable();
-            }
+            mainBool = onActionEdit();
         }
 
-        return super.onOptionsItemSelected(item);
+        return mainBool;
     }
 
     @Override
@@ -273,6 +147,182 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
         }
 
         return true;
+    }
+
+    public JSONArray onSortData (JSONArray theArray) {
+        List<JSONObject> jsons = new ArrayList<JSONObject>();
+        for (int i = 0; i < theArray.length(); i++) {
+            try {
+                jsons.add(theArray.getJSONObject(i));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        Collections.sort(jsons, new Comparator<JSONObject>() {
+            @Override
+            public int compare(JSONObject lhs, JSONObject rhs) {
+                String lid = null;
+                String rid = null;
+                try {
+                    lid = lhs.getString("epoch");
+                    rid = rhs.getString("epoch");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                lid.e
+
+                return lid.compareTo(rid);
+            }
+        });
+        return new JSONArray(jsons);
+    }
+
+    public boolean onActionSave () {
+        FragmentManager fragmentManager = getFragmentManager();
+        dataStorage = DataStorage.getInstance(this);
+        JSONObject tempJSON = dataStorage.onReadTrip(position);
+        JSONObject data = new JSONObject();
+        boolean error = false;
+
+        if (menuOptions) {
+            if (type.equals("meeting")) {
+                MeetingFragment meetingFragment = (MeetingFragment) getFragmentManager().findFragmentByTag("meeting");
+                try {
+                    data = meetingFragment.onGetData();
+                    data.put("type", "meeting");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else if (type.equals("flight")) {
+                FlightFragment flightFragment = (FlightFragment) getFragmentManager().findFragmentByTag("flight");
+                try {
+                    data = flightFragment.onGetData();
+                    data.put("type", "flight");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else if (type.equals("food")) {
+                FoodFragment foodFragment = (FoodFragment) getFragmentManager().findFragmentByTag("food");
+                try {
+                    data = foodFragment.onGetData();
+                    data.put("type", "food");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            if (setDateButton.getText().equals("Select Date") || setTimeButton.getText().equals("Select Time")) {
+                error = true;
+            }
+
+            switch (getActionBar().getSelectedNavigationIndex()) {
+                case 0:
+                    MeetingFragment meetingFragment = (MeetingFragment) fragmentManager.findFragmentByTag("meeting");
+                    try {
+                        data = meetingFragment.onGetData();
+                        data.put("type", "meeting");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+                case 1:
+                    FlightFragment flightFragment = (FlightFragment) fragmentManager.findFragmentByTag("flight");
+                    try {
+                        data = flightFragment.onGetData();
+                        data.put("type", "flight");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+                case 2:
+                    FoodFragment foodFragment = (FoodFragment) fragmentManager.findFragmentByTag("food");
+                    try {
+                        data = foodFragment.onGetData();
+                        data.put("type", "food");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+            }
+        }
+
+        try {
+            if (data.getBoolean("error")) error = true;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (error) {
+            if (setDateButton.getText().equals("Select Date")) setDateButton.setTextColor(getResources().getColor(R.color.error));
+            if (setTimeButton.getText().equals("Select Time")) setTimeButton.setTextColor(getResources().getColor(R.color.error));
+
+            return false;
+        }
+
+        try {
+            data.put("date", setDateButton.getText());
+            data.put("time", setTimeButton.getText());
+            data.put("epoch", getEpochTime());
+            if (menuOptions) {
+                tempJSON.getJSONArray("tripActivities").put(position2, data);
+            } else {
+                tempJSON.getJSONArray("tripActivities").put(data);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        dataStorage.onRewriteFile(tempJSON, position);
+        finish();
+        return true;
+    }
+
+    public boolean onActionEdit () {
+        daOptionsMenu.findItem(R.id.action_edit).setVisible(false);
+        daOptionsMenu.findItem(R.id.action_save).setVisible(true);
+
+        setTimeButton.setEnabled(true);
+        setDateButton.setEnabled(true);
+
+        if (type.equals("meeting")) {
+            MeetingFragment meetingFragment = (MeetingFragment) getFragmentManager().findFragmentByTag("meeting");
+            meetingFragment.onEnable();
+        } else if (type.equals("flight")) {
+            FlightFragment flightFragment = (FlightFragment) getFragmentManager().findFragmentByTag("flight");
+            flightFragment.onEnable();
+        } else if (type.equals("food")) {
+            FoodFragment foodFragment = (FoodFragment) getFragmentManager().findFragmentByTag("food");
+            foodFragment.onEnable();
+        }
+
+        return true;
+    }
+
+    public void onMenuOptions () {
+        try {
+            setTimeButton.setText(editJSON.getString("time"));
+            setDateButton.setText(editJSON.getString("date"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (type.equals("meeting")) {
+            MeetingFragment meetingFragment = (MeetingFragment) getFragmentManager().findFragmentByTag("meeting");
+            meetingFragment.onSetData(editJSON);
+        } else if (type.equals("flight")) {
+            FlightFragment flightFragment = (FlightFragment) getFragmentManager().findFragmentByTag("flight");
+            flightFragment.onSetData(editJSON);
+        } else if (type.equals("food")) {
+            FoodFragment foodFragment = (FoodFragment) getFragmentManager().findFragmentByTag("food");
+            foodFragment.onSetData(editJSON);
+        }
     }
 
     public void showTimePickerDialog(View v) {

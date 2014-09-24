@@ -11,7 +11,7 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/imageView"
+        android:id="@+id/trips_imageView"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -23,8 +23,8 @@
         android:text="@string/trip_name"
         android:id="@+id/main_item_trip"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView" />
+        android:layout_toRightOf="@+id/trips_imageView"
+        android:layout_toEndOf="@+id/trips_imageView" />
 
     <TextView
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/flight_info"
         android:id="@+id/main_item_flight"
-        android:layout_toEndOf="@+id/imageView"
+        android:layout_toEndOf="@+id/trips_imageView"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -43,7 +43,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/first_next_activity"
         android:id="@+id/main_item_activity"
-        android:layout_toEndOf="@+id/imageView"
-        android:layout_alignBottom="@+id/imageView"
-        android:layout_toRightOf="@+id/imageView" />
+        android:layout_toEndOf="@+id/trips_imageView"
+        android:layout_alignBottom="@+id/trips_imageView"
+        android:layout_toRightOf="@+id/trips_imageView" />
 </RelativeLayout>

@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.stratazima.weego.processes.DataStorage;
@@ -89,8 +90,26 @@ public class MainActivity extends Activity {
                 if (tempObj != null) {
                     try {
                         name = tempObj.getString("tripName");
-                        flight = tempObj.getString("tripFlight");
-                        daActivity = tempObj.getString("activity");
+
+                        JSONArray tempArray = tempObj.getJSONArray("tripActivities");
+
+                        boolean one = false;
+                        boolean two = false;
+                        for (i = 0; i < tempArray.length(); i++) {
+                            if (tempArray.getJSONObject(i).getString("type").equals("flight")) {
+                                if (!one) flight = tempArray.getJSONObject(i).getString("flightFrom") + " to " + tempArray.getJSONObject(i).getString("flightTo");
+                                one = true;
+                            } else {
+                                // TODO Add TempArray Data according to data.
+                                if (!two) {
+                                    //daActivity = tempArray.getJSONObject(i).getString("");
+                                }
+
+                                two = true;
+                            }
+
+                            if (one && two) i = tempArray.length() + 1;
+                        }
 
                         if (flight.equals("")) flight = "No Flight Planned";
                         if (daActivity.equals("")) daActivity = "No Activities Planned";

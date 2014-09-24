@@ -149,36 +149,11 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
         return true;
     }
 
-    public JSONArray onSortData (JSONArray theArray) {
-        List<JSONObject> jsons = new ArrayList<JSONObject>();
-        for (int i = 0; i < theArray.length(); i++) {
-            try {
-                jsons.add(theArray.getJSONObject(i));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        Collections.sort(jsons, new Comparator<JSONObject>() {
-            @Override
-            public int compare(JSONObject lhs, JSONObject rhs) {
-                String lid = null;
-                String rid = null;
-                try {
-                    lid = lhs.getString("epoch");
-                    rid = rhs.getString("epoch");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+    /**
+     * Custom Methods to encapsulate related code
+     */
 
-                lid.e
-
-                return lid.compareTo(rid);
-            }
-        });
-        return new JSONArray(jsons);
-    }
-
-    public boolean onActionSave () {
+    public boolean onActionSave() {
         FragmentManager fragmentManager = getFragmentManager();
         dataStorage = DataStorage.getInstance(this);
         JSONObject tempJSON = dataStorage.onReadTrip(position);
@@ -273,6 +248,7 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
                 tempJSON.getJSONArray("tripActivities").put(data);
             }
 
+            tempJSON.put("tripActivities", onSortData(tempJSON.getJSONArray("tripActivities")));
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (ParseException e) {
@@ -284,7 +260,7 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
         return true;
     }
 
-    public boolean onActionEdit () {
+    public boolean onActionEdit() {
         daOptionsMenu.findItem(R.id.action_edit).setVisible(false);
         daOptionsMenu.findItem(R.id.action_save).setVisible(true);
 
@@ -305,7 +281,7 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
         return true;
     }
 
-    public void onMenuOptions () {
+    public void onMenuOptions() {
         try {
             setTimeButton.setText(editJSON.getString("time"));
             setDateButton.setText(editJSON.getString("date"));
@@ -372,6 +348,34 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
 
         return String.valueOf(epoch);
     }
+
+    public JSONArray onSortData(JSONArray theArray) {
+        List<JSONObject> jsons = new ArrayList<JSONObject>();
+        for (int i = 0; i < theArray.length(); i++) {
+            try {
+                jsons.add(theArray.getJSONObject(i));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        Collections.sort(jsons, new Comparator<JSONObject>() {
+            @Override
+            public int compare(JSONObject lhs, JSONObject rhs) {
+                String lid = null;
+                String rid = null;
+                try {
+                    lid = lhs.getString("epoch");
+                    rid = rhs.getString("epoch");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                return lid.compareTo(rid);
+            }
+        });
+        return new JSONArray(jsons);
+    }
+
 
     /**
      * Begin Fragments Implementation
@@ -595,6 +599,10 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
             restaurantNotes.setEnabled(true);
         }
     }
+
+    /**
+     * Fragments for Date and Time Dialog Fragments
+     */
 
     public static class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 

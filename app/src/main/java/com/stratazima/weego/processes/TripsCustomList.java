@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.stratazima.weego.R;
@@ -28,17 +29,32 @@ public class TripsCustomList extends ArrayAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        LayoutInflater inflater = context.getLayoutInflater();
-        View rowView = inflater.inflate(R.layout.item_trip, null, true);
+        ViewHolder holder;
 
-        TextView name = (TextView) rowView.findViewById(R.id.main_item_trip);
-        TextView flight = (TextView) rowView.findViewById(R.id.main_item_flight);
-        TextView activity = (TextView) rowView.findViewById(R.id.main_item_activity);
+        if (view == null) {
+            LayoutInflater inflater = context.getLayoutInflater();
+            view = inflater.inflate(R.layout.item_trip, parent, false);
 
-        name.setText(daArrayList.get(position).get("tripName"));
-        flight.setText(daArrayList.get(position).get("tripFlight"));
-        activity.setText(daArrayList.get(position).get("activity"));
+            holder = new ViewHolder();
+            holder.imageView = (ImageView) view.findViewById(R.id.trips_imageView);
+            holder.name = (TextView) view.findViewById(R.id.main_item_trip);
+            holder.flight = (TextView) view.findViewById(R.id.main_item_flight);
+            holder.activity = (TextView) view.findViewById(R.id.main_item_activity);
+        } else {
+            holder = (ViewHolder) view.getTag();
+        }
 
-        return rowView;
+        holder.name.setText(daArrayList.get(position).get("tripName"));
+        holder.flight.setText(daArrayList.get(position).get("tripFlight"));
+        holder.activity.setText(daArrayList.get(position).get("activity"));
+
+        return view;
+    }
+
+    static class ViewHolder {
+        ImageView imageView;
+        TextView name;
+        TextView flight;
+        TextView activity;
     }
 }

@@ -67,8 +67,6 @@ public class ViewTripActivity extends Activity {
             addActivityIntent.putExtra("listPosition", -1);
             startActivityForResult(addActivityIntent, ADD_ACTIVITY_REQUEST);
             return true;
-        } else if (id == R.id.action_edit) {
-
         }
         return super.onOptionsItemSelected(item);
     }

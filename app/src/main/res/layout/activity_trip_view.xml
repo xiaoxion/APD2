@@ -29,4 +29,15 @@
         android:dividerHeight="5dp"
         android:divider="@null" />
 
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/trip_imageButton"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/ic_weego_add"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="80dp" />
+
 </RelativeLayout>

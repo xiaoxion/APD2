@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -49,32 +50,29 @@ public class ViewTripActivity extends Activity {
         }
 
         viewActivityList = (ListView) findViewById(R.id.view_trip_listview);
+
+        onButtonConnect();
         onListCreate();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.add, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_add) {
-            Intent addActivityIntent = new Intent(this, ActivityActivity.class);
-            addActivityIntent.putExtra("position", position);
-            addActivityIntent.putExtra("listPosition", -1);
-            startActivityForResult(addActivityIntent, ADD_ACTIVITY_REQUEST);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         onListCreate();
     }
+
+    public void onButtonConnect() {
+        ImageButton imageButton = (ImageButton) findViewById(R.id.trip_imageButton);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addActivityIntent = new Intent(getApplicationContext(), ActivityActivity.class);
+                addActivityIntent.putExtra("position", position);
+                addActivityIntent.putExtra("listPosition", -1);
+                startActivityForResult(addActivityIntent, ADD_ACTIVITY_REQUEST);
+            }
+        });
+    }
+
 
     public void onListCreate() {
         JSONObject jsonObject = dataStorage.onReadTrip(position);

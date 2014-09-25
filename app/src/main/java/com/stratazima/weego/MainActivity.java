@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -35,29 +37,9 @@ public class MainActivity extends Activity {
 
         dataStorage = DataStorage.getInstance(this);
         mainListView = (ListView) findViewById(R.id.main_listview);
+
+        onButtonConnect();
         onListCreate();
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.add, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_add) {
-            Intent addTripIntent = new Intent(this, AddTripActivity.class);
-            startActivityForResult(addTripIntent, ADD_TRIP_REQUEST);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -151,6 +133,17 @@ public class MainActivity extends Activity {
                 Intent viewTripIntent = new Intent(getApplicationContext(), ViewTripActivity.class);
                 viewTripIntent.putExtra("position", position);
                 startActivityForResult(viewTripIntent, ACTIVITY_RETURN);
+            }
+        });
+    }
+
+    public void onButtonConnect() {
+        ImageButton imageButton = (ImageButton) findViewById(R.id.main_imageButton);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addTripIntent = new Intent(getApplicationContext(), AddTripActivity.class);
+                startActivityForResult(addTripIntent, ADD_TRIP_REQUEST);
             }
         });
     }

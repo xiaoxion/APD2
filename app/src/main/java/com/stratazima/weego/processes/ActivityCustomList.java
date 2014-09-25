@@ -22,6 +22,7 @@ import java.util.Date;
 public class ActivityCustomList extends ArrayAdapter {
     private final Activity context;
     private final ArrayList<JSONObject> daArrayList;
+    private ArrayList<Boolean> temp = new ArrayList<Boolean>();
 
     public ActivityCustomList(Activity context, String[] length, ArrayList<JSONObject> daArrayList) {
         super(context, R.layout.item_trip, length);
@@ -69,6 +70,7 @@ public class ActivityCustomList extends ArrayAdapter {
                 if (type.equals("meeting")) {
                     try {
                         view.setBackground(context.getResources().getDrawable(R.drawable.weego_yellow_item));
+                        holder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_meeting_icon));
                         holder.mainTextView.setText(tempObj.getString("meetingName"));
                         holder.subOneTextView.setText(tempObj.getString("meetingWith"));
                     } catch (JSONException e) {
@@ -77,6 +79,7 @@ public class ActivityCustomList extends ArrayAdapter {
                 } else if (type.equals("flight")) {
                     try {
                         view.setBackground(context.getResources().getDrawable(R.drawable.weego_red_item));
+                        holder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_flight_icon));
                         holder.mainTextView.setText(tempObj.getString("flightAirline"));
                         holder.subOneTextView.setText(tempObj.getString("flightConfirmation"));
                         holder.subTwoTextView.setText(tempObj.getString("flightNumber"));
@@ -86,6 +89,7 @@ public class ActivityCustomList extends ArrayAdapter {
                 } else if (type.equals("food")) {
                     try {
                         view.setBackground(context.getResources().getDrawable(R.drawable.weego_blue_item));
+                        holder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_food_icon));
                         holder.mainTextView.setText(tempObj.getString("restaurantName"));
                         holder.subOneTextView.setText(tempObj.getString("restaurantConfirmation"));
                     } catch (JSONException e) {
@@ -93,9 +97,21 @@ public class ActivityCustomList extends ArrayAdapter {
                     }
                 }
 
+                final Date date = new Date();
+
                 try {
                     holder.sideOneTextView.setText(tempObj.getString("time"));
                     holder.sideTwoTextView.setText(tempObj.getString("date"));
+
+                    long daOne = Long.parseLong(daArrayList.get(position).getString("epoch"));
+                    long daSecond = date.getTime();
+
+                    if (daOne > daSecond) {
+                        temp.add(position, true);
+                    } else {
+                        temp.add(position, false);
+                        view.setBackground(context.getResources().getDrawable(R.drawable.weego_disabled_item));
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -107,15 +123,7 @@ public class ActivityCustomList extends ArrayAdapter {
 
     @Override
     public boolean isEnabled(int position) {
-        final Date date = new Date();
-        boolean temp = false;
-        try {
-            if (daArrayList.get(position).getInt("epoch") < date.getTime()) {
-                temp = true;
-            }
-        } catch (JSONException e) { e.printStackTrace();}
-
-        return temp;
+        return temp.get(position);
     }
 
     static class ViewHolder {

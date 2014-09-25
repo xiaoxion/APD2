@@ -44,6 +44,7 @@ public class TripsCustomList extends ArrayAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
+        holder.imageView.setBackground(context.getResources().getDrawable(R.drawable.ic_weego_background));
         holder.name.setText(daArrayList.get(position).get("tripName"));
         holder.flight.setText(daArrayList.get(position).get("tripFlight"));
         holder.activity.setText(daArrayList.get(position).get("activity"));

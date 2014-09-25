@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.stratazima.weego.processes.DataStorage;
 
@@ -33,6 +34,9 @@ public class AddTripActivity extends Activity {
             int position = getIntent().getIntExtra("position", 0);
             dataStorage.onReadTrip(position);
         }
+
+        ImageView imageView = (ImageView) findViewById(R.id.trips_imageView);
+        imageView.setBackground(getResources().getDrawable(R.drawable.weego_trip));
 
         tripName = (EditText) findViewById(R.id.add_trip_edittext);
         tripLocation = (EditText) findViewById(R.id.add_trip_edittext2);

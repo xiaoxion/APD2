@@ -26,7 +26,6 @@ import java.util.HashMap;
 
 public class MainActivity extends Activity {
     static final int ADD_TRIP_REQUEST = 1;
-    static final int ACTIVITY_RETURN = 2;
     DataStorage dataStorage;
     ListView mainListView;
 
@@ -47,6 +46,12 @@ public class MainActivity extends Activity {
         if (resultCode == RESULT_OK) {
             onListCreate();
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        onListCreate();
     }
 
     public void onListCreate() {
@@ -132,7 +137,7 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent viewTripIntent = new Intent(getApplicationContext(), ViewTripActivity.class);
                 viewTripIntent.putExtra("position", position);
-                startActivityForResult(viewTripIntent, ACTIVITY_RETURN);
+                startActivity(viewTripIntent);
             }
         });
     }

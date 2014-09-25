@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TimePicker;
 
 import com.stratazima.weego.processes.DataStorage;
@@ -42,6 +43,7 @@ import java.util.List;
 public class ActivityActivity extends Activity implements ActionBar.OnNavigationListener {
     Button setDateButton;
     Button setTimeButton;
+    ImageView daImage;
     DataStorage dataStorage;
     JSONObject editJSON;
     String type = null;
@@ -59,6 +61,7 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
         position2 = getIntent().getIntExtra("listPosition", -1);
         setDateButton = (Button) findViewById(R.id.select_date);
         setTimeButton = (Button) findViewById(R.id.select_time);
+        daImage = (ImageView) findViewById(R.id.activity_imageView);
 
         if (getIntent().getIntExtra("listPosition", -1) >= 0) {
             dataStorage = DataStorage.getInstance(this);
@@ -72,10 +75,13 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
             }
 
             if (type.equals("meeting")) {
+                daImage.setBackground(getResources().getDrawable(R.drawable.meeting_large));
                 getFragmentManager().beginTransaction().replace(R.id.container, MeetingFragment.newInstance(), "meeting").commit();
             } else if (type.equals("flight")) {
+                daImage.setBackground(getResources().getDrawable(R.drawable.flight_large));
                 getFragmentManager().beginTransaction().replace(R.id.container, FlightFragment.newInstance(), "flight").commit();
             } else if (type.equals("food")) {
+                daImage.setBackground(getResources().getDrawable(R.drawable.food_large));
                 getFragmentManager().beginTransaction().replace(R.id.container, FoodFragment.newInstance(), "food").commit();
             }
 
@@ -136,12 +142,15 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
     public boolean onNavigationItemSelected(int position, long id) {
         switch (position) {
             case 0:
+                daImage.setBackground(getResources().getDrawable(R.drawable.meeting_large));
                 getFragmentManager().beginTransaction().replace(R.id.container, MeetingFragment.newInstance(), "meeting").commit();
                 break;
             case 1:
+                daImage.setBackground(getResources().getDrawable(R.drawable.flight_large));
                 getFragmentManager().beginTransaction().replace(R.id.container, FlightFragment.newInstance(), "flight").commit();
                 break;
             case 2:
+                daImage.setBackground(getResources().getDrawable(R.drawable.food_large));
                 getFragmentManager().beginTransaction().replace(R.id.container, FoodFragment.newInstance(), "food").commit();
                 break;
         }

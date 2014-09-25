@@ -68,6 +68,7 @@ public class ActivityCustomList extends ArrayAdapter {
             if (type != null) {
                 if (type.equals("meeting")) {
                     try {
+                        view.setBackground(context.getResources().getDrawable(R.drawable.weego_yellow_item));
                         holder.mainTextView.setText(tempObj.getString("meetingName"));
                         holder.subOneTextView.setText(tempObj.getString("meetingWith"));
                     } catch (JSONException e) {
@@ -75,6 +76,7 @@ public class ActivityCustomList extends ArrayAdapter {
                     }
                 } else if (type.equals("flight")) {
                     try {
+                        view.setBackground(context.getResources().getDrawable(R.drawable.weego_red_item));
                         holder.mainTextView.setText(tempObj.getString("flightAirline"));
                         holder.subOneTextView.setText(tempObj.getString("flightConfirmation"));
                         holder.subTwoTextView.setText(tempObj.getString("flightNumber"));
@@ -83,6 +85,7 @@ public class ActivityCustomList extends ArrayAdapter {
                     }
                 } else if (type.equals("food")) {
                     try {
+                        view.setBackground(context.getResources().getDrawable(R.drawable.weego_blue_item));
                         holder.mainTextView.setText(tempObj.getString("restaurantName"));
                         holder.subOneTextView.setText(tempObj.getString("restaurantConfirmation"));
                     } catch (JSONException e) {
@@ -107,7 +110,7 @@ public class ActivityCustomList extends ArrayAdapter {
         final Date date = new Date();
         boolean temp = false;
         try {
-            if (daArrayList.get(position).getInt("epoch") > date.getTime()) {
+            if (daArrayList.get(position).getInt("epoch") < date.getTime()) {
                 temp = true;
             }
         } catch (JSONException e) { e.printStackTrace();}

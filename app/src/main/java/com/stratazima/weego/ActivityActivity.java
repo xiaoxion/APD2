@@ -311,10 +311,19 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
         String min = String.valueOf(minute);
         String timeCode = "AM";
 
-        if (hourOfDay > 12) {
+        if (hourOfDay >= 12) {
             timeCode = "PM";
-            hourDay = String.valueOf(hourOfDay-12);
+            if (hourOfDay == 12) {
+                hourDay = String.valueOf(hourOfDay);
+            } else {
+                hourDay = String.valueOf(hourOfDay-12);
+            }
         }
+
+        if (hourOfDay == 0) {
+            hourDay = "12";
+        }
+
 
         if (hourDay.length() == 1) hourDay = "0" + hourDay;
         if (min.length() == 1) min = "0" + min;
@@ -342,7 +351,7 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
 
     public String getEpochTime() throws ParseException {
         String fullDate = setDateButton.getText().toString() + " " + setTimeButton.getText().toString();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm/dd/yyyy hh:mm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
         Date date = simpleDateFormat.parse(fullDate);
         long epoch = date.getTime();
 
@@ -404,6 +413,12 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
 
         public JSONObject onGetData () {
             JSONObject tempJSON = new JSONObject();
+
+            try {
+                tempJSON.put("error", false);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
             if (meetingName.getText().toString().equals("")) {
                 meetingName.setError("Enter Meeting Name");
@@ -476,6 +491,12 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
 
         public JSONObject onGetData () {
             JSONObject tempJSON = new JSONObject();
+
+            try {
+                tempJSON.put("error", false);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
             if (flightNumber.getText().toString().equals("") || flightAirline.getText().toString().equals("") || flightConfirmation.getText().toString().equals("")) {
                 if (flightNumber.getText().toString().equals("")) flightNumber.setError("Enter Flight Number");
@@ -557,6 +578,12 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
 
         public JSONObject onGetData () {
             JSONObject tempJSON = new JSONObject();
+
+            try {
+                tempJSON.put("error", false);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
             if (restaurantName.getText().toString().equals("")) {
                 restaurantName.setError("Enter Restaurant Name");

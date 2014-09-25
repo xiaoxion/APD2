@@ -9,5 +9,7 @@
         android:layout_height="fill_parent"
         android:id="@+id/main_listview"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:dividerHeight="5dp"
+        android:divider="@null" />
 </RelativeLayout>

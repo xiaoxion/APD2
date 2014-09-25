@@ -75,6 +75,7 @@ public class MainActivity extends Activity {
             String name;
             String flight;
             String daActivity;
+            Date date = new Date();
 
             for (int i = 0; i < daJSONArray.length(); i++) {
                 JSONObject tempObj = null;
@@ -98,9 +99,12 @@ public class MainActivity extends Activity {
                         boolean two = false;
 
                         for (i = 0; i < tempArray.length(); i++) {
-                            final Date date = new Date();
                             JSONObject tempJSON = tempArray.getJSONObject(i);
-                            if (tempJSON.getInt("epoch") > date.getTime()) {
+
+                            long daOne = Long.parseLong(tempJSON.getString("epoch"));
+                            long daSecond = date.getTime();
+
+                            if (daOne > daSecond) {
                                 if (tempJSON.getString("type").equals("flight")) {
                                     if (!one) flight = tempJSON.getString("flightFrom") + " to " + tempJSON.getString("flightTo");
 

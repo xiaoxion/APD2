@@ -25,6 +25,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/view_trip_listview"
         android:layout_below="@+id/view_trip_imageview"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:dividerHeight="5dp"
+        android:divider="@null" />
 
 </RelativeLayout>

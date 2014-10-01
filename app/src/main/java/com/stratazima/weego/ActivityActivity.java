@@ -86,7 +86,9 @@ public class ActivityActivity extends Activity implements ActionBar.OnNavigation
             }
 
             setTimeButton.setEnabled(false);
+            setTimeButton.setTextColor(getResources().getColor(R.color.da_black));
             setDateButton.setEnabled(false);
+            setDateButton.setTextColor(getResources().getColor(R.color.da_black));
 
             menuOptions = true;
         } else {

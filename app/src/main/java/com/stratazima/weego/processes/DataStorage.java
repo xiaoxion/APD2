@@ -21,7 +21,6 @@ import java.io.InputStreamReader;
 public class DataStorage implements Cloneable {
     private static DataStorage mInstance;
     private static Context mContext;
-    JSONArray tripArray = null;
 
     private DataStorage() {}
 
@@ -71,7 +70,7 @@ public class DataStorage implements Cloneable {
         File tempFileDir = mContext.getFilesDir();
 
         File file[] = tempFileDir.listFiles();
-        tripArray = new JSONArray();
+        JSONArray tripArray = new JSONArray();
         for (int i = 0; i < file.length; i++) {
             try {
                 InputStream inputStream = mContext.openFileInput(file[i].getName());

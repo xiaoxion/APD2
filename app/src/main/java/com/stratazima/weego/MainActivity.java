@@ -43,8 +43,10 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            onListCreate();
+        if (requestCode == ADD_TRIP_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                onListCreate();
+            }
         }
     }
 
@@ -85,8 +87,8 @@ public class MainActivity extends Activity {
                         boolean one = false;
                         boolean two = false;
 
-                        for (i = 0; i < tempArray.length(); i++) {
-                            JSONObject tempJSON = tempArray.getJSONObject(i);
+                        for (int j = 0; j < tempArray.length(); j++) {
+                            JSONObject tempJSON = tempArray.getJSONObject(j);
 
                             long daOne = Long.parseLong(tempJSON.getString("epoch"));
                             long daSecond = date.getTime();
@@ -108,7 +110,7 @@ public class MainActivity extends Activity {
                                     two = true;
                                 }
 
-                                if (one && two) i = tempArray.length() + 1;
+                                if (one && two) j = tempArray.length() + 1;
                             }
                         }
 
